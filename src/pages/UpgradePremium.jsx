@@ -127,7 +127,7 @@ export default function UpgradePremium() {
             </h3>
 
             <div className="text-3xl font-black text-cyber-cyan">
-              IDR 200,000{" "}
+              IDR 220,000{" "}
               <span className="text-xs text-gray-400 font-normal">
                 / LIFETIME ACCESS
               </span>
