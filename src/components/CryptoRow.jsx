@@ -2,7 +2,12 @@ import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { Plus, TrendingUp, TrendingDown } from "lucide-react"; // Ikon penanda arah tren pasar
 
-export default function CryptoRow({ coin, index, onAddToWatchlist }) {
+export default function CryptoRow({
+  coin,
+  index,
+  onAddToWatchlist,
+  onRowClick,
+}) {
   const navigate = useNavigate();
   const isPositive = coin.price_change_percentage_24h >= 0;
 
@@ -18,7 +23,8 @@ export default function CryptoRow({ coin, index, onAddToWatchlist }) {
     <motion.tr
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.05 }} // Efek animasi tangga (staggered animation) yang memanjakan mata
+      transition={{ delay: index * 0.05 }}
+      onClick={onRowClick}
       className="border-b border-gray-800/60 hover:bg-cyber-dark/60 transition-colors cursor-pointer group"
     >
       {/* Klik pada area baris selain tombol "+" akan memicu navigasi detail koin */}

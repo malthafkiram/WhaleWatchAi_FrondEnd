@@ -315,6 +315,7 @@ export default function DashboardHome() {
                     coin={coin}
                     index={index}
                     onAddToWatchlist={handleCreateWatchlist}
+                    onRowClick={() => setSelectedCoin(coin)}
                   />
                 ))}
               </tbody>

@@ -240,14 +240,18 @@ export default function CoinDetail() {
                 status={aiData.ai_analysis.sentiment?.toUpperCase()}
               />
 
-              <div className="bg-cyber-bg border border-gray-800 p-4 rounded-xl text-xs text-gray-300 leading-relaxed">
-                <span className="text-cyber-neon font-bold block mb-1">
+              <div className="bg-cyber-bg border border-gray-800 p-4 rounded-xl text-xs text-gray-300 leading-relaxed flex flex-col gap-1.5">
+                <span className="text-cyber-neon font-bold block">
                   AI CLINICAL ARGUMENT:
                 </span>
-                "
-                {aiData.ai_analysis.analysis ||
-                  aiData.ai_analysis.premium_deep_dive}
-                "
+
+                <div className="max-h-62.5 overflow-y-auto pr-1 custom-scrollbar font-mono text-gray-400">
+                  "
+                  {aiData?.ai_analysis?.analysis ||
+                    aiData?.ai_analysis?.premium_deep_dive ||
+                    "Memindai klaster data blockchain..."}
+                  "
+                </div>
               </div>
             </div>
           ) : (
