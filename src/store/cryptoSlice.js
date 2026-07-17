@@ -4,6 +4,8 @@ const initialState = {
   coins: [],
   loading: false,
   error: null,
+
+  gameStatus: localStorage.getItem("ww_game_status") || "IDLE",
 };
 
 const cryptoSlice = createSlice({
@@ -22,9 +24,19 @@ const cryptoSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    setGameStatusGlobal: (state, action) => {
+      state.gameStatus = action.payload;
+      localStorage.setItem("ww_game_status", action.payload);
+    },
   },
 });
 
-export const { fetchCoinsStart, fetchCoinsSuccess, fetchCoinsFailure } =
-  cryptoSlice.actions;
+export const {
+  fetchCoinsStart,
+  fetchCoinsSuccess,
+  fetchCoinsFailure,
+  setGameStatusGlobal,
+} = cryptoSlice.actions;
+
 export default cryptoSlice.reducer;

@@ -6,22 +6,26 @@ import {
   fetchCoinsStart,
   fetchCoinsSuccess,
   fetchCoinsFailure,
+  setGameStatusGlobal,
 } from "../store/cryptoSlice.js";
 import { addToWatchlist } from "../store/watchlistSlice.js";
 import CryptoRow from "../components/CryptoRow.jsx";
 import api from "../utils/api.js";
 
 import AnimatedGauge from "../components/AnimatedGauge.jsx";
-import LiveTerminalFeed from "../components/LiveTerminalFeed.jsx"; // Bertindak sebagai Asset/Volume Monitor
+import LiveTerminalFeed from "../components/LiveTerminalFeed.jsx";
 
 export default function DashboardHome() {
   const dispatch = useDispatch();
-  const { coins, loading, error } = useSelector((state) => state.crypto);
+
+  // Ekstraksi state terpadu dari central store Redux
+  const { coins, loading, error, gameStatus } = useSelector(
+    (state) => state.crypto,
+  );
   const [noti, setNoti] = useState(null);
 
-  // STATE ENGINE GAME: Dioptimasi Menggunakan Fungsi Hydration Inisialisasi Lokal
+  // STATE ENGINE GAME LOKAL (Tetap dipertahankan untuk profil finansial)
   const [virtualCash, setVirtualCash] = useState(() => {
-    // Membaca cache lokal instan saat komponen remount untuk melenyapkan kedipan visual
     const savedCash = localStorage.getItem("ww_virtual_cash");
     return savedCash ? parseFloat(savedCash) : 5000;
   });
@@ -37,10 +41,9 @@ export default function DashboardHome() {
   });
 
   const [selectedCoin, setSelectedCoin] = useState(null);
-  const [gameStatus, setGameStatus] = useState("IDLE"); // Siklus antarmuka: 'IDLE' atau 'WAITING'
-  const [gaugeScore, setGaugeScore] = useState(50); // Nilai default awal di tengah (Neutral)
+  const [gaugeScore, setGaugeScore] = useState(50);
 
-  // Ambil data mutakhir dari database PostgreSQL & Selaraskan UI Cache
+  // Sinkronisasi data dompet saat komponen dimuat
   useEffect(() => {
     const syncUserWallet = async () => {
       try {
@@ -52,12 +55,10 @@ export default function DashboardHome() {
           const freshXp = parseInt(userData.xp || 0);
           const freshIsPremium = userData.isPremium;
 
-          // Perbarui state reaktif React
           setVirtualCash(freshCash);
           setUserLevel(freshLevel);
           setUserXp(freshXp);
 
-          // Kunci salinannya ke localStorage sebagai cache transisi masa depan
           localStorage.setItem("ww_virtual_cash", freshCash);
           localStorage.setItem("ww_user_level", freshLevel);
           localStorage.setItem("ww_user_xp", freshXp);
@@ -81,8 +82,7 @@ export default function DashboardHome() {
         const freshCoins = response.data.data;
         dispatch(fetchCoinsSuccess(freshCoins));
 
-        // Dieksekusi otomatis setelah menunggu 1 menit
-
+        // Jika status WAITING aktif di Redux Store global, jalankan settlement evaluasi
         if (isSilent && gameStatus === "WAITING") {
           try {
             const gameResponse = await api.post("/api/game/settle");
@@ -96,27 +96,25 @@ export default function DashboardHome() {
             const nextLevel = parseInt(updatedUser.level);
             const nextXp = parseInt(updatedUser.xp);
 
-            // Perbarui State Aplikasi
             setVirtualCash(nextCash);
             setUserLevel(nextLevel);
             setUserXp(nextXp);
 
-            // Perbarui Cache Finansial Lokal Browser
             localStorage.setItem("ww_virtual_cash", nextCash);
             localStorage.setItem("ww_user_level", nextLevel);
             localStorage.setItem("ww_user_xp", nextXp);
 
             if (result === "WIN") {
-              setGaugeScore(85); // Putar jarum visual ke area hijau (Win Zone)
+              setGaugeScore(85);
               setNoti({
                 type: "success",
-                msg: `🎯 BLOCK SETTLED! Prediksi Anda akurat. Profit +$500 berhasil diamankan! ${leveledUp ? "🎉 LEVEL UP ACCELERATED!" : ""}`,
+                msg: `BLOCK SETTLED! Prediksi Anda akurat. Profit +$500 berhasil diamankan! ${leveledUp ? "LEVEL UP ACCELERATED!" : ""}`,
               });
             } else {
-              setGaugeScore(20); // Putar jarum visual ke area merah (Lose Zone)
+              setGaugeScore(20);
               setNoti({
                 type: "error",
-                msg: `💥 BLOCK SETTLED! Prediksi Anda meleset akibat manipulasi pasar. Saldo dipotong -$300.`,
+                msg: `🚨 BLOCK SETTLED! Prediksi Anda meleset akibat manipulasi pasar. Saldo dipotong -$300.`,
               });
             }
           } catch (gameErr) {
@@ -125,7 +123,8 @@ export default function DashboardHome() {
               gameErr.response?.data?.message,
             );
           } finally {
-            setGameStatus("IDLE"); // Kembalikan status ke IDLE
+            // Mengembalikan kuncian game ke IDLE di level global Redux Store
+            dispatch(setGameStatusGlobal("IDLE"));
           }
         }
       } catch (err) {
@@ -142,13 +141,13 @@ export default function DashboardHome() {
     getMarketData(false);
 
     const marketInterval = setInterval(() => {
-      getMarketData(true); // Memicu silent refresh + game evaluation setiap 60 detik
+      getMarketData(true);
     }, 60000);
 
     return () => {
-      clearInterval(marketInterval); // Mencegah kebocoran memori RAM browser
+      clearInterval(marketInterval);
     };
-  }, [dispatch, gameStatus]); // Dependensi gameStatus wajib dimasukkan agar scope closure setInterval terupdate
+  }, [dispatch, gameStatus]);
 
   // HANDLER A KLIEN: Mengunci Prediksi Awal & Entry Price ke Database
   const handlePlaceBet = async (type) => {
@@ -158,11 +157,11 @@ export default function DashboardHome() {
     }
 
     try {
-      setGameStatus("WAITING"); // Kunci tombol taruhan agar user tidak klik ganda
-      setGaugeScore(50); // Setel jarum speedometer ke posisi tengah sementara
+      // Set status WAITING ke Redux Store global agar terkunci permanen
+      dispatch(setGameStatusGlobal("WAITING"));
+      setGaugeScore(50);
       setNoti(null);
 
-      // Tembak endpoint POST game untuk mencatat entryPrice detik ini di database
       await api.post("/api/game/predict", {
         coinId: selectedCoin.id,
         prediction: type,
@@ -170,16 +169,17 @@ export default function DashboardHome() {
 
       setNoti({
         type: "success",
-        msg: `📡 POSISI DIBUKA! Mengunci prediksi ${type} pada ${selectedCoin.name}. Menunggu penutupan blok harga 1 menit ke depan...`,
+        msg: `📥 POSISI DIBUKA! Mengunci prediksi ${type} pada ${selectedCoin.name}. Menunggu penutupan blok harga 1 menit ke depan...`,
       });
     } catch (err) {
       const serverMsg = err.response?.data?.message || err.message;
       alert(`[BACKEND CRITICAL ERROR]: ${serverMsg}`);
-      setGameStatus("IDLE"); // Buka kembali kunci jika terjadi error di gerbang awal
+
+      // REVISI ARSITEKTUR: Kembalikan status ke IDLE di Redux jika gagal menembak API gerbang awal
+      dispatch(setGameStatusGlobal("IDLE"));
     }
   };
 
-  // Otomatis menetapkan koin index pertama sebagai target default jika user belum memilih
   useEffect(() => {
     if (coins.length > 0 && !selectedCoin) {
       setSelectedCoin(coins[0]);
@@ -209,7 +209,7 @@ export default function DashboardHome() {
       animate={{ opacity: 1, y: 0 }}
       className="p-6 max-w-7xl mx-auto space-y-6 font-mono"
     >
-      {/* 1. TICKER MARQUEE RUNNING TEXT */}
+      {/* TICKER MARQUEE RUNNING TEXT */}
       <div className="w-full bg-cyber-dark border border-cyber-cyan/20 rounded-xl py-3 overflow-hidden relative flex items-center">
         <div className="absolute left-0 bg-cyber-dark px-4 font-bold text-cyber-cyan border-r border-gray-800 z-10 text-xs">
           LIVE TICKER
@@ -236,7 +236,7 @@ export default function DashboardHome() {
         </div>
       </div>
 
-      {/* 2. AREA WIDGET INTERAKTIF DENGAN KENDALI PROPS PERSISTEN */}
+      {/* AREA WIDGET INTERAKTIF DENGAN KENDALI PROPS PERSISTEN */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <AnimatedGauge
           score={gaugeScore}
@@ -246,7 +246,6 @@ export default function DashboardHome() {
           level={userLevel}
           xp={userXp}
         />
-
         <LiveTerminalFeed
           coins={coins}
           selectedCoin={selectedCoin}
@@ -255,7 +254,7 @@ export default function DashboardHome() {
         />
       </div>
 
-      {/* 3. HEADER UTAMA DASBOR */}
+      {/* HEADER UTAMA DASBOR */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-cyber-dark/40 border border-gray-800 p-6 rounded-2xl">
         <div className="flex items-center gap-3">
           <div className="p-3 bg-cyber-cyan/10 rounded-xl border border-cyber-cyan/30 text-cyber-cyan">
