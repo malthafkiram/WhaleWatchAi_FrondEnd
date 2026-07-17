@@ -40,9 +40,15 @@ export default function Login() {
 
       const { credential } = credentialResponse;
 
-      const response = await api.post("api/auth/login-google", {
-        google_token: credential,
-      });
+      const response = await api.post(
+        "api/auth/login-google",
+        {},
+        {
+          headers: {
+            "access-token-google": credential,
+          },
+        },
+      );
 
       const { access_token, user } = response.data.data;
 
@@ -55,6 +61,7 @@ export default function Login() {
 
       navigate("/home");
     } catch (error) {
+      console.error("DETAIL ERROR JARINGAN FRONTEND:", error);
       setError("Autentikasi Google Gagal terhubung ke server.");
     }
   };
