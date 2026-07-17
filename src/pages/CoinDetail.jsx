@@ -51,7 +51,7 @@ export default function CoinDetail() {
         }));
         setChartData(sampleChart);
 
-        // 2. Jalankan penembakan data AI jika tidak terkunci[cite: 3, 19, 27, 28]
+        // 2. Jalankan penembakan data AI jika tidak terkunci
         if (!isLocked) {
           const aiRes = await api.get(`/api/ai/analyze/${coinId}`);
           setAiData(aiRes.data.data);
