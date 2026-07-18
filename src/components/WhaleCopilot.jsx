@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Bot, Send, X, Sparkles, User, RefreshCw, Minimize2 } from "lucide-react";
+import { Bot, Send, Sparkles, User, RefreshCw, Minimize2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import api from "../utils/api";
 
@@ -9,7 +9,7 @@ export default function WhaleCopilot() {
     {
       id: 1,
       sender: "ai",
-      text: "Halo! Saya **Whale Copilot**, asisten AI khusus crypto milikmu. Apa yang ingin kamu analisis hari ini?",
+      text: "Halo! Saya Whale Copilot, asisten AI khusus crypto milikmu. Apa yang ingin kamu analisis hari ini?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -50,12 +50,20 @@ export default function WhaleCopilot() {
         { id: Date.now() + 1, sender: "ai", text: aiReply },
       ]);
     } catch (err) {
+      const errorMsg =
+        err.response?.data?.message ||
+        (err.response?.status === 404
+          ? "Endpoint AI Chat belum ter-deploy di server target."
+          : err.response?.status === 401
+            ? "Sesi masuk telah berakhir. Silakan login kembali."
+            : err.message || "Gagal menghubungkan ke AI Copilot.");
+
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           sender: "ai",
-          text: `🚨 Error: ${err.response?.data?.message || "Gagal menghubungkan ke AI Copilot."}`,
+          text: `🚨 Error: ${errorMsg}`,
         },
       ]);
     } finally {
@@ -87,10 +95,12 @@ export default function WhaleCopilot() {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-                    WHALE COPILOT AI <Sparkles className="w-3.5 h-3.5 text-cyber-neon" />
+                    WHALE COPILOT AI{" "}
+                    <Sparkles className="w-3.5 h-3.5 text-cyber-neon" />
                   </h3>
                   <span className="text-[10px] text-cyber-cyan flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-ping inline-block" /> ONLINE - Llama 3.1 Neural Core
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-ping inline-block" />{" "}
+                    ONLINE - Llama 3.1 Neural Core
                   </span>
                 </div>
               </div>
@@ -151,7 +161,8 @@ export default function WhaleCopilot() {
               ))}
               {loading && (
                 <div className="flex gap-2 items-center text-cyber-cyan text-xs italic py-2">
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Menulis analisis neural...
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Menulis
+                  analisis neural...
                 </div>
               )}
               <div ref={chatEndRef} />

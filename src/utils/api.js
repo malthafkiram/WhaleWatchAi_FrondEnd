@@ -4,6 +4,8 @@ const api = axios.create({
   baseURL: "https://whalewatchai.kabanroom.web.id",
 });
 
+
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
