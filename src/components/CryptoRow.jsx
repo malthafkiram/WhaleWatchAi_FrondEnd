@@ -29,7 +29,7 @@ export default function CryptoRow({
     >
       {/* Klik pada area baris selain tombol "+" akan memicu navigasi detail koin */}
       <td
-        className="py-4 px-4 font-mono text-gray-500 text-sm"
+        className="py-4 px-4 font-mono text-gray-500 text-sm hidden sm:table-cell"
         onClick={() => navigate(`/coin/${coin.id}`)}
       >
         {index + 1}
@@ -77,7 +77,7 @@ export default function CryptoRow({
         </span>
       </td>
 
-      <td className="py-4 px-4 font-mono">
+      <td className="py-4 px-4 font-mono hidden md:table-cell">
         <span className="px-2.5 py-1 text-xs font-bold rounded-md bg-cyber-dark text-cyber-cyan border border-cyber-cyan/30">
           {coin.category || "Layer 1"}
         </span>

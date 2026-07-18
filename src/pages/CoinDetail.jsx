@@ -137,7 +137,7 @@ export default function CoinDetail() {
             </a>
           </div>
         </div>
-        <div className="text-right">
+        <div className="text-left lg:text-right">
           <span className="text-xs text-gray-400 block">
             CURRENT INDEX PRICE
           </span>

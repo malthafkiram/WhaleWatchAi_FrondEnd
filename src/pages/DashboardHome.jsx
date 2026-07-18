@@ -300,11 +300,11 @@ export default function DashboardHome() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-cyber-dark/80 border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
-                  <th className="py-4 px-4 font-normal">#</th>
+                  <th className="py-4 px-4 font-normal hidden sm:table-cell">#</th>
                   <th className="py-4 px-4 font-normal">Nama Aset</th>
                   <th className="py-4 px-4 font-normal">Harga Live (USD)</th>
                   <th className="py-4 px-4 font-normal">Perubahan 24J</th>
-                  <th className="py-4 px-4 font-normal">Kategori Klaster</th>
+                  <th className="py-4 px-4 font-normal hidden md:table-cell">Kategori Klaster</th>
                   <th className="py-4 px-4 font-normal text-center">Pantau</th>
                 </tr>
               </thead>
