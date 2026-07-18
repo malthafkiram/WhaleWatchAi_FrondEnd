@@ -5,6 +5,8 @@ import DashboardHome from "./pages/DashboardHome";
 import CoinDetail from "./pages/CoinDetail";
 import Watchlist from "./pages/Watchlist";
 import UpgradePremium from "./pages/UpgradePremium";
+import Leaderboard from "./pages/Leaderboard";
+import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./components/MainLayout";
 
@@ -12,6 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/landing" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -25,6 +28,7 @@ function App() {
           <Route path="/" element={<DashboardHome />} />
           <Route path="/coin/:coinId" element={<CoinDetail />} />
           <Route path="/watchlist" element={<Watchlist />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/upgrade" element={<UpgradePremium />} />
         </Route>
 
@@ -35,3 +39,4 @@ function App() {
 }
 
 export default App;
+

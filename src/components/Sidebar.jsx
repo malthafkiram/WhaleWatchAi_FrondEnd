@@ -1,13 +1,14 @@
-import { NavLink } from "react-router"; // Menggunakan react-router murni sesuai pilihanmu
-import { LayoutDashboard, Coins, Zap, Bitcoin, X } from "lucide-react"; // Aset ikon modern
+import { NavLink } from "react-router";
+import { LayoutDashboard, Coins, Zap, Bitcoin, X, Trophy, Radio } from "lucide-react";
 
-export default function Sidebar({ isOpen, onClose }) {
-  // Alasan logis memisahkan array objek menu: Mempermudah penambahan menu baru di masa depan tanpa mengotori blok JSX (Clean Code)
+export default function Sidebar({ isOpen, onClose, onOpenWhaleRadar }) {
   const menuItems = [
     { path: "/", name: "MARKET RADAR", icon: LayoutDashboard },
     { path: "/watchlist", name: "MY WATCHLIST", icon: Coins },
+    { path: "/leaderboard", name: "HALL OF WHALES", icon: Trophy },
     { path: "/upgrade", name: "UPGRADE TRANSMISSION", icon: Zap },
   ];
+
 
   return (
     <>

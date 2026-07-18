@@ -10,23 +10,24 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-} from "recharts"; // Komponen Recharts
-import { Cpu, Globe, ShieldAlert, ArrowLeft, Lock } from "lucide-react";
+} from "recharts";
+import { Cpu, Globe, ShieldAlert, ArrowLeft, Lock, Share2, Copy, Check, Sparkles, X } from "lucide-react";
 import SentimentBar from "../components/SentimentBar.jsx";
 import api from "../utils/api.js";
 
 export default function CoinDetail() {
-  const { coinId } = useParams(); // Menangkap parameter id koin dari URL
+  const { coinId } = useParams();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user); // Memeriksa status premium user di Redux
+  const user = useSelector((state) => state.auth.user);
 
   const [coinData, setCoinData] = useState(null);
   const [aiData, setAiData] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  // Cek apakah akses AI terkunci: Jika user FREE mencoba membuka koin selain BTC atau ETH
   const isLocked =
     (!user || String(user.isPremium) === "false") &&
     coinId !== "bitcoin" &&
@@ -38,20 +39,24 @@ export default function CoinDetail() {
         setLoading(true);
         setError(null);
 
-        // 1. Ambil data detail koin dasar[cite: 21, 27, 28]
-        const detailRes = await api.get(`/api/coins/detail/${coinId}`);
+        const [detailRes, chartRes] = await Promise.all([
+          api.get(`/api/coins/detail/${coinId}`),
+          api.get(`/api/coins/chart/${coinId}?days=7`).catch(() => ({ data: { data: [] } })),
+        ]);
+
         setCoinData(detailRes.data.data);
+        if (chartRes.data?.data && chartRes.data.data.length > 0) {
+          setChartData(chartRes.data.data);
+        } else {
+          const sampleChart = Array.from({ length: 7 }, (_, i) => ({
+            day: `Day ${i + 1}`,
+            Price:
+              detailRes.data.data.market_stats.current_price *
+              (1 + (Math.random() * 0.04 - 0.02)),
+          }));
+          setChartData(sampleChart);
+        }
 
-        // Alasan logis simulasi array koordinat Recharts: Karena data market chart berformat koordinat 7 hari
-        const sampleChart = Array.from({ length: 7 }, (_, i) => ({
-          day: `Day ${i + 1}`,
-          Price:
-            detailRes.data.data.market_stats.current_price *
-            (1 + (Math.random() * 0.04 - 0.02)),
-        }));
-        setChartData(sampleChart);
-
-        // 2. Jalankan penembakan data AI jika tidak terkunci
         if (!isLocked) {
           const aiRes = await api.get(`/api/ai/analyze/${coinId}`);
           setAiData(aiRes.data.data);
@@ -67,6 +72,14 @@ export default function CoinDetail() {
 
     fetchAllDetails();
   }, [coinId, isLocked]);
+
+  const handleCopyCardText = () => {
+    const shareText = `🚀 WhaleWatch AI Signal Report 🚀\n\nCoin: ${coinData?.name} (${coinData?.symbol})\nCurrent Price: $${coinData?.market_stats?.current_price}\nAI Recommendation: ${aiData?.ai_analysis?.recommendation || "HOLD"}\nSentiment: ${aiData?.ai_analysis?.sentiment || "Neutral"}\n\nAnalysis: "${aiData?.ai_analysis?.analysis || "N/A"}"\n\nAnalyze more at WhaleWatch.AI!`;
+    navigator.clipboard.writeText(shareText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
 
   if (loading) {
     return (
@@ -137,15 +150,95 @@ export default function CoinDetail() {
             </a>
           </div>
         </div>
-        <div className="text-left lg:text-right">
-          <span className="text-xs text-gray-400 block">
-            CURRENT INDEX PRICE
-          </span>
-          <span className="text-2xl font-black text-white">
-            ${coinData?.market_stats.current_price?.toLocaleString()}
-          </span>
+        <div className="flex items-center gap-3">
+          {!isLocked && aiData && (
+            <button
+              onClick={() => setShowShareModal(true)}
+              className="px-4 py-2 bg-cyber-cyan/10 border border-cyber-cyan/40 text-cyber-cyan hover:bg-cyber-cyan/20 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+            >
+              <Share2 className="w-4 h-4" /> SHARE AI CARD
+            </button>
+          )}
+          <div className="text-left lg:text-right">
+            <span className="text-xs text-gray-400 block">
+              CURRENT INDEX PRICE
+            </span>
+            <span className="text-2xl font-black text-white">
+              ${coinData?.market_stats.current_price?.toLocaleString()}
+            </span>
+          </div>
         </div>
       </div>
+
+
+        {/* Share Modal */}
+        {showShareModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="w-full max-w-md bg-cyber-dark border border-cyber-cyan/40 rounded-2xl overflow-hidden shadow-2xl p-6 space-y-5"
+            >
+              <div className="flex items-center justify-between border-b border-gray-800 pb-3">
+                <span className="text-white font-bold text-sm flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-cyber-neon" /> EXPORT AI INTELLIGENCE CARD
+                </span>
+                <button
+                  onClick={() => setShowShareModal(false)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Infographic Preview */}
+              <div className="bg-gradient-to-br from-cyber-dark to-cyber-bg border border-cyber-cyan/30 p-5 rounded-2xl space-y-4 shadow-xl font-mono">
+                <div className="flex justify-between items-center border-b border-gray-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <img src={coinData?.image} className="w-8 h-8 rounded-full" alt="coin" />
+                    <div>
+                      <h4 className="font-black text-white text-sm">{coinData?.name}</h4>
+                      <span className="text-[10px] text-cyber-cyan">[{coinData?.symbol}]</span>
+                    </div>
+                  </div>
+                  <span className="px-3 py-1 bg-cyber-cyan/10 border border-cyber-cyan text-cyber-cyan font-black text-xs rounded-lg">
+                    {aiData?.ai_analysis?.recommendation || "HOLD"}
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between text-gray-400">
+                    <span>Live Index Price:</span>
+                    <span className="text-white font-bold">${coinData?.market_stats?.current_price?.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-400">
+                    <span>Market Sentiment:</span>
+                    <span className="text-cyber-neon font-bold">{aiData?.ai_analysis?.sentiment || "Neutral"}</span>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-cyber-dark rounded-xl border border-gray-800 text-gray-300 text-xs italic leading-relaxed">
+                  "{aiData?.ai_analysis?.analysis || "Analisis neural sedang aktif..."}"
+                </div>
+
+                <div className="pt-2 border-t border-gray-800 flex justify-between items-center text-[10px] text-gray-500">
+                  <span>WHALEWATCH.AI NEURAL CORE</span>
+                  <span>VERIFIED SIGNAL</span>
+                </div>
+              </div>
+
+              <button
+                onClick={handleCopyCardText}
+                className="w-full py-3 bg-cyber-cyan text-cyber-dark font-black rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-cyan-300 transition-all"
+              >
+                {copied ? <Check className="w-4 h-4 text-emerald-950" /> : <Copy className="w-4 h-4" />}
+                {copied ? "COPIED TO CLIPBOARD!" : "COPY SIGNAL TEXT FOR SOCIALS"}
+              </button>
+            </motion.div>
+          </div>
+        )}
+
+
 
       {/* SEGMENT 2: TWO-COLUMN LAYOUT GRAFIK VS AI */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
