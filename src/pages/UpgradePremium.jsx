@@ -64,13 +64,14 @@ export default function UpgradePremium() {
       {/* HEADER PAGE */}
       <div className="text-center space-y-3">
         <h1 className="text-4xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-neon to-cyber-pink drop-shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-          UPGRADE TRANSMISSION HUB
+          PUSAT UPGRADE MEMBERSHIP PRO
         </h1>
         <p className="text-gray-400 text-sm max-w-md mx-auto">
-          Tingkatkan kasta akun kamu menjadi intelijen level tinggi untuk
-          membuka radar prediksi psikologi koin terdalam.
+          Tingkatkan akun Anda menjadi level Whale Pro untuk
+          membuka analisis psikologis pasar & fitur AI tanpa batas.
         </p>
       </div>
+
 
       {/* PRICING TABLE UI GRID SYSTEM */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">

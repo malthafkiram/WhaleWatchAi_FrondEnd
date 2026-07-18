@@ -212,7 +212,7 @@ export default function DashboardHome() {
       {/* TICKER MARQUEE RUNNING TEXT */}
       <div className="w-full bg-cyber-dark border border-cyber-cyan/20 rounded-xl py-3 overflow-hidden relative flex items-center">
         <div className="absolute left-0 bg-cyber-dark px-4 font-bold text-cyber-cyan border-r border-gray-800 z-10 text-xs">
-          LIVE TICKER
+          HARGA REALTME
         </div>
         <div className="animate-marquee whitespace-nowrap flex gap-12 text-sm tracking-wider pl-27.5">
           {coins.slice(0, 5).map((c) => (
@@ -262,7 +262,7 @@ export default function DashboardHome() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white tracking-wide">
-              MARKET INTELLIGENCE
+              RADAR PASAR & INTELIJEN KRIPTO
             </h1>
             <p className="text-gray-400 text-sm mt-0.5">
               Memantau pergerakan koin raksasa bursa kripto global
@@ -291,9 +291,10 @@ export default function DashboardHome() {
       <div className="bg-cyber-dark border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
         {loading ? (
           <div className="p-12 text-center text-gray-500 tracking-widest animate-pulse">
-            LOADING REAL-TIME BLOCKCHAIN DATA...
+            MEMUAT DATA PASAR BLOCKCHAIN REAL-TIME...
           </div>
         ) : error ? (
+
           <div className="p-12 text-center text-cyber-rose">{error}</div>
         ) : (
           <div className="overflow-x-auto">

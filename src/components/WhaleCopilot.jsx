@@ -44,10 +44,12 @@ export default function WhaleCopilot() {
         history: historyToSend,
       });
 
-      const aiReply = res.data?.data?.reply || "Maaf, kendala jaringan.";
+      const rawReply = res.data?.data?.reply || "Maaf, kendala jaringan.";
+      const cleanReply = typeof rawReply === "string" ? rawReply.replace(/\*/g, "") : rawReply;
+
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, sender: "ai", text: aiReply },
+        { id: Date.now() + 1, sender: "ai", text: cleanReply },
       ]);
     } catch (err) {
       const errorMsg =
@@ -58,12 +60,14 @@ export default function WhaleCopilot() {
             ? "Sesi masuk telah berakhir. Silakan login kembali."
             : err.message || "Gagal menghubungkan ke AI Copilot.");
 
+      const cleanError = typeof errorMsg === "string" ? errorMsg.replace(/\*/g, "") : errorMsg;
+
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           sender: "ai",
-          text: `🚨 Error: ${errorMsg}`,
+          text: `🚨 Error: ${cleanError}`,
         },
       ]);
     } finally {
@@ -78,23 +82,23 @@ export default function WhaleCopilot() {
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 font-mono">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 font-mono max-w-[calc(100vw-2rem)]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="w-[360px] sm:w-[420px] h-[520px] bg-cyber-dark/95 backdrop-blur-xl border border-cyber-cyan/40 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.25)] flex flex-col overflow-hidden mb-4"
+            className="w-[calc(100vw-2rem)] sm:w-[420px] max-h-[85vh] h-[500px] sm:h-[520px] bg-cyber-dark/95 backdrop-blur-xl border border-cyber-cyan/40 rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.25)] flex flex-col overflow-hidden mb-4"
           >
             {/* Header Chatbot */}
-            <div className="p-4 bg-gradient-to-r from-cyber-dark to-cyber-cyan/20 border-b border-cyber-cyan/30 flex items-center justify-between">
+            <div className="p-3.5 sm:p-4 bg-gradient-to-r from-cyber-dark to-cyber-cyan/20 border-b border-cyber-cyan/30 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-cyber-cyan/20 border border-cyber-cyan rounded-xl text-cyber-cyan animate-pulse">
                   <Bot className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                  <h3 className="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                     WHALE COPILOT AI{" "}
                     <Sparkles className="w-3.5 h-3.5 text-cyber-neon" />
                   </h3>
@@ -106,7 +110,7 @@ export default function WhaleCopilot() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 text-gray-400 hover:text-white hover:bg-cyber-cyan/10 rounded-lg transition-colors"
+                className="p-1.5 text-gray-400 hover:text-white hover:bg-cyber-cyan/10 rounded-lg transition-colors cursor-pointer"
               >
                 <Minimize2 className="w-4 h-4" />
               </button>
@@ -119,7 +123,7 @@ export default function WhaleCopilot() {
                   key={idx}
                   onClick={() => handleSend(p)}
                   disabled={loading}
-                  className="whitespace-nowrap px-2.5 py-1 text-[11px] bg-cyber-dark border border-gray-800 hover:border-cyber-cyan/50 text-gray-300 rounded-lg transition-all"
+                  className="whitespace-nowrap px-2.5 py-1 text-[11px] bg-cyber-dark border border-gray-800 hover:border-cyber-cyan/50 text-gray-300 rounded-lg transition-all cursor-pointer"
                 >
                   {p}
                 </button>
@@ -127,7 +131,7 @@ export default function WhaleCopilot() {
             </div>
 
             {/* Area Pesan Chat */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 custom-scrollbar text-xs leading-relaxed">
+            <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3 custom-scrollbar text-xs leading-relaxed">
               {messages.map((m) => (
                 <div
                   key={m.id}
@@ -149,7 +153,7 @@ export default function WhaleCopilot() {
                     )}
                   </div>
                   <div
-                    className={`p-3 rounded-2xl max-w-[80%] break-words ${
+                    className={`p-3 rounded-2xl max-w-[82%] break-words ${
                       m.sender === "user"
                         ? "bg-cyber-cyan/10 border border-cyber-cyan/30 text-white rounded-tr-none"
                         : "bg-cyber-bg border border-gray-800 text-gray-200 rounded-tl-none whitespace-pre-line"
@@ -187,7 +191,7 @@ export default function WhaleCopilot() {
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="p-2 bg-cyber-cyan hover:bg-cyan-400 text-cyber-dark font-bold rounded-xl transition-all disabled:opacity-50"
+                className="p-2 bg-cyber-cyan hover:bg-cyan-400 text-cyber-dark font-bold rounded-xl transition-all disabled:opacity-50 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -202,13 +206,14 @@ export default function WhaleCopilot() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(true)}
-          className="px-4 py-3 bg-gradient-to-r from-cyber-cyan to-cyber-neon text-cyber-dark font-black rounded-2xl shadow-[0_0_25px_rgba(6,182,212,0.5)] flex items-center gap-2 tracking-wider text-xs border border-white/20"
+          className="px-4 py-3 bg-gradient-to-r from-cyber-cyan to-cyber-neon text-cyber-dark font-black rounded-2xl shadow-[0_0_25px_rgba(6,182,212,0.5)] flex items-center gap-2 tracking-wider text-xs border border-white/20 cursor-pointer"
         >
           <Bot className="w-5 h-5 text-cyber-dark" />
-          <span>ASK WHALE COPILOT</span>
+          <span>TANYA WHALE COPILOT</span>
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
         </motion.button>
       )}
     </div>
   );
 }
+

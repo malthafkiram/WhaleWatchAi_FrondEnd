@@ -7,6 +7,7 @@ import Watchlist from "./pages/Watchlist";
 import UpgradePremium from "./pages/UpgradePremium";
 import Leaderboard from "./pages/Leaderboard";
 import LandingPage from "./pages/LandingPage";
+import Information from "./pages/Information";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./components/MainLayout";
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/upgrade" element={<UpgradePremium />} />
+          <Route path="/info" element={<Information />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -37,6 +39,7 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;
 

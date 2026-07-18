@@ -15,21 +15,21 @@ export default function LiveVolumeMonitor({
   return (
     <div className="bg-cyber-dark border border-gray-800 p-5 rounded-2xl flex flex-col justify-between gap-3 w-full h-full min-h-[160px] font-mono text-white">
       <div className="space-y-0.5">
-        <span className="text-[10px] text-gray-500 font-bold tracking-widest block flex items-center gap-1.5">
-          <BarChart3 className="w-3.5 h-3.5 text-cyber-pink" /> ASSET TARGET
-          SELECTION
+        <span className="text-[10px] text-gray-500 font-bold tracking-widest block flex items-center gap-1.5 uppercase">
+          <BarChart3 className="w-3.5 h-3.5 text-cyber-pink" /> PILIH KOIN TARGET PREDIKSI
         </span>
         <h3 className="text-white font-black text-sm tracking-wide">
-          CHOOSE YOUR PROTOCOL
+          TARGET PROTOKOL PREDIKSI
         </h3>
       </div>
 
       <div className="space-y-2 flex-1 flex flex-col justify-center">
         {topAssets.length === 0 ? (
           <div className="text-[11px] text-gray-600 animate-pulse">
-            LOADING CORE NODE...
+            MEMUAT DATA PASAR UTAMA...
           </div>
         ) : (
+
           topAssets.map((coin) => {
             const isSelected = selectedCoin?.id === coin.id;
             return (

@@ -92,10 +92,10 @@ export default function Watchlist() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white tracking-wide">
-              PERSONAL WATCHLIST RADAR
+              DAFTAR PANTAUAN SAYA
             </h1>
             <p className="text-gray-400 text-sm mt-0.5">
-              Ruang kendali penuh manipulasi target harga dan klaster koin taktis
+              Ruang kendali penuh catatan strategi dan target koin taktis
             </p>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function Watchlist() {
             className="px-5 py-3 bg-gradient-to-r from-cyber-cyan to-cyber-neon text-cyber-dark font-black text-xs rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:scale-105 transition-all flex items-center gap-2 tracking-wider"
           >
             <Sparkles className="w-4 h-4 text-cyber-dark" />
-            <span>AI PORTFOLIO AUDIT</span>
+            <span>AUDIT PORTOFOLIO AI</span>
           </button>
         )}
       </div>
@@ -115,9 +115,10 @@ export default function Watchlist() {
       {/* KONDISI LOADING & ERROR */}
       {loading ? (
         <div className="p-12 text-center text-gray-500 tracking-widest animate-pulse">
-          FETCHING SYSTEM DATABASE RECORD...
+          MEMUAT DATA DAFTAR PANTAUAN...
         </div>
       ) : error ? (
+
         <div className="p-12 text-center text-cyber-rose">
           [CRITICAL ERROR]: {error}
         </div>

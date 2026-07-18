@@ -44,10 +44,10 @@ export default function AnimatedGauge({
       <div className="flex justify-between items-center border-b border-gray-800/60 pb-2.5">
         <span className="text-[10px] text-gray-500 font-bold tracking-widest flex items-center gap-1.5">
           <ShieldAlert className="w-3.5 h-3.5 text-cyber-cyan animate-pulse" />{" "}
-          WHALE TYCOON NODE v4.0
+          NODE SIMULASI TRADING V4.0
         </span>
         <span className="text-xs font-black text-cyber-emerald bg-cyber-emerald/10 border border-cyber-emerald/30 px-2.5 py-0.5 rounded-lg shadow-[0_0_12px_rgba(16,185,129,0.15)] tracking-wide">
-          CASH: ${virtualCash.toLocaleString()}
+          SALDO: ${virtualCash.toLocaleString()}
         </span>
       </div>
 
@@ -55,21 +55,20 @@ export default function AnimatedGauge({
       <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
         {/* SEKTOR KIRI: Kontrol Taruhan & Indikator Progress XP */}
         <div className="flex flex-col gap-3 flex-1 w-full">
-          {/* Komponen Visual Dinamis Baru: Pangkat Level Pengguna */}
+          {/* Pangkat Level Pengguna */}
           <div className="flex items-center gap-2 bg-gray-900/40 border border-gray-800/80 px-3 py-1.5 rounded-xl w-fit">
             <Award className="w-4 h-4 text-amber-500" />
             <span className="text-[11px] font-bold tracking-wider text-gray-300">
-              TRADER RANK:{" "}
+              RANK TRADER:{" "}
               <span className="text-white font-black text-xs">LVL {level}</span>
             </span>
           </div>
 
-          {/* Komponen Visual Dinamis Baru: Progress Bar Pengukur Level-Up */}
+          {/* Progress Bar Pengukur Level-Up */}
           <div className="space-y-1">
             <div className="flex justify-between text-[9px] text-gray-500 font-bold tracking-wider">
               <span className="flex items-center gap-0.5">
-                <Zap className="w-2.5 h-2.5 text-cyber-cyan" /> EXPERIENCE
-                MATRIX
+                <Zap className="w-2.5 h-2.5 text-cyber-cyan" /> MATRIKS PENGALAMAN (XP)
               </span>
               <span className="text-gray-400">
                 {xp} / {xpNeeded} XP
@@ -86,10 +85,10 @@ export default function AnimatedGauge({
             </div>
           </div>
 
-          {/* Tombol Aksi Eksekusi Taruhan Kuantitatif */}
+          {/* Tombol Aksi Eksekusi Taruhan */}
           <div className="space-y-1.5 mt-1">
             <span className="text-[9px] text-gray-400 font-bold tracking-wider block">
-              PREDICT NEXT 1-MIN DIRECTION:
+              PREDIKSI ARAH 1 MENIT KE DEPAN:
             </span>
             <div className="flex gap-2">
               <motion.button
@@ -103,7 +102,7 @@ export default function AnimatedGauge({
                     : "bg-cyber-emerald/10 text-cyber-emerald border-cyber-emerald/30 hover:bg-cyber-emerald hover:text-cyber-bg hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
                 }`}
               >
-                <TrendingUp className="w-3 h-3" /> PUMP
+                <TrendingUp className="w-3 h-3" /> PUMP (NAIK)
               </motion.button>
 
               <motion.button
@@ -117,19 +116,18 @@ export default function AnimatedGauge({
                     : "bg-cyber-rose/10 text-cyber-rose border-cyber-rose/30 hover:bg-cyber-rose hover:text-cyber-bg hover:shadow-[0_0_15px_rgba(244,63,94,0.3)]"
                 }`}
               >
-                <TrendingDown className="w-3 h-3" /> DUMP
+                <TrendingDown className="w-3 h-3" /> DUMP (TURUN)
               </motion.button>
             </div>
           </div>
         </div>
 
-        {/* SEKTOR KANAN: Speedometer Lingkaran (Circular Progress Gauge) */}
+        {/* SEKTOR KANAN: Speedometer Lingkaran */}
         <div className="relative w-24 h-24 flex items-center justify-center flex-shrink-0 bg-gray-900/20 rounded-full p-2 border border-gray-800/40">
           <svg
             className="w-full h-full transform -rotate-90"
             viewBox="0 0 100 100"
           >
-            {/* Lingkaran Alas Belakang (Track) */}
             <circle
               cx="50"
               cy="50"
@@ -138,7 +136,6 @@ export default function AnimatedGauge({
               strokeWidth="7"
               fill="transparent"
             />
-            {/* Lingkaran Indikator Animasi Pegas */}
             <motion.circle
               cx="50"
               cy="50"
@@ -153,7 +150,6 @@ export default function AnimatedGauge({
               style={{ filter: `drop-shadow(0 0 8px ${getThemeColor()})` }}
             />
           </svg>
-          {/* Angka Persentase Multiplier di Tengah Lingkaran */}
           <div className="absolute flex flex-col items-center justify-center font-mono">
             <motion.span
               animate={{ color: getThemeColor() }}
@@ -162,23 +158,24 @@ export default function AnimatedGauge({
               {safeScore}%
             </motion.span>
             <span className="text-[6px] text-gray-500 font-bold tracking-widest uppercase">
-              MUTATION
+              MUTASI
             </span>
           </div>
         </div>
       </div>
 
-      {/* TEKS PROSES TERMINAL FLUID */}
+      {/* TEKS PROSES TERMINAL */}
       <div className="text-[9px] text-gray-500 italic border-t border-gray-900 pt-2 flex items-center justify-between">
         <span>
           {gameStatus === "WAITING"
-            ? "> 📡 Telemetry locked. Streaming blockchain block..."
-            : "> 🟢 System standby. Ready for execution node."}
+            ? "> 📡 Telemetri terkunci. Menunggu blok harga ditutup..."
+            : "> 🟢 Sistem siaga. Siap mengeksekusi prediksi."}
         </span>
         <span className="text-[8px] uppercase tracking-normal text-cyber-cyan font-bold bg-cyber-cyan/5 px-1.5 py-0.5 rounded border border-cyber-cyan/20 animate-pulse">
-          {gameStatus}
+          {gameStatus === "WAITING" ? "MENUNGGU" : "SIAGA"}
         </span>
       </div>
+
     </div>
   );
 }

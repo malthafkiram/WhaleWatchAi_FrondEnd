@@ -1,14 +1,14 @@
 import { NavLink } from "react-router";
-import { LayoutDashboard, Coins, Zap, Bitcoin, X, Trophy, Radio } from "lucide-react";
+import { LayoutDashboard, Coins, Zap, Bitcoin, X, Trophy, Info } from "lucide-react";
 
-export default function Sidebar({ isOpen, onClose, onOpenWhaleRadar }) {
+export default function Sidebar({ isOpen, onClose }) {
   const menuItems = [
-    { path: "/", name: "MARKET RADAR", icon: LayoutDashboard },
-    { path: "/watchlist", name: "MY WATCHLIST", icon: Coins },
-    { path: "/leaderboard", name: "HALL OF WHALES", icon: Trophy },
-    { path: "/upgrade", name: "UPGRADE TRANSMISSION", icon: Zap },
+    { path: "/", name: "RADAR PASAR", icon: LayoutDashboard },
+    { path: "/watchlist", name: "DAFTAR PANTAUAN SAYA", icon: Coins },
+    { path: "/leaderboard", name: "PAPAN PERINGKAT PAUS", icon: Trophy },
+    { path: "/upgrade", name: "UPGRADE KE PRO", icon: Zap },
+    { path: "/info", name: "INFORMASI & PANDUAN", icon: Info },
   ];
-
 
   return (
     <>
@@ -40,7 +40,7 @@ export default function Sidebar({ isOpen, onClose, onOpenWhaleRadar }) {
             <button
               onClick={onClose}
               className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800/40 md:hidden transition-colors cursor-pointer"
-              title="Close Sidebar"
+              title="Tutup Menu"
             >
               <X className="w-4 h-4" />
             </button>
@@ -54,8 +54,7 @@ export default function Sidebar({ isOpen, onClose, onOpenWhaleRadar }) {
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  onClick={onClose} // Otomatis tutup sidebar setelah memilih navigasi di mobile
-                  // Menggunakan fungsi callback bawaan NavLink untuk mendeteksi status rute aktif secara dinamis
+                  onClick={onClose}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-3 rounded-xl font-mono text-xs font-bold tracking-wider transition-all border ${
                       isActive
@@ -72,11 +71,13 @@ export default function Sidebar({ isOpen, onClose, onOpenWhaleRadar }) {
           </nav>
         </div>
 
-        {/* FOOTER INFORMASI TERMINAL */}
-        <div className="text-[10px] font-mono text-gray-600 border-t border-gray-800/40 pt-4 text-center tracking-widest">
-          SECURE NODE: v1.0.0-PRO Created By : GoBar
+        {/* FOOTER INFORMASI PENGEMBANG */}
+        <div className="text-[10px] font-mono text-gray-500 border-t border-gray-800/40 pt-4 text-center tracking-widest leading-relaxed">
+          SISTEM INTELLIGENCE v1.0 <br />
+          Dikembangkan oleh <span className="text-cyber-cyan font-bold">malthafkiram</span>
         </div>
       </aside>
     </>
   );
 }
+

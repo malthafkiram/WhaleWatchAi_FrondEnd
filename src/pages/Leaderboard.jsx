@@ -58,7 +58,7 @@ export default function Leaderboard() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white tracking-wide">
-              HALL OF WHALES & LEADERBOARD
+              PAPAN PERINGKAT PAUS (LEADERBOARD)
             </h1>
             <p className="text-gray-400 text-sm mt-0.5">
               Papan peringkat trader virtual terbaik & log performa trading
@@ -76,7 +76,7 @@ export default function Leaderboard() {
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            <Trophy className="w-4 h-4" /> TOP TRADERS
+            <Trophy className="w-4 h-4" /> TRADER TERATAS
           </button>
           <button
             onClick={() => setActiveTab("history")}
@@ -86,7 +86,7 @@ export default function Leaderboard() {
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            <History className="w-4 h-4" /> MY TRADE LOGS
+            <History className="w-4 h-4" /> RIWAYAT TRADING SAYA
           </button>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function Leaderboard() {
       {/* Content Area */}
       {loading ? (
         <div className="p-12 text-center text-cyber-cyan animate-pulse tracking-widest bg-cyber-dark border border-gray-800 rounded-2xl">
-          COMPUTING GLOBAL RANKINGS & BLOCKCHAIN LOGS...
+          MEMENGARUHI PERINGKAT GLOBAL & LOG BLOCKCHAIN...
         </div>
       ) : activeTab === "leaderboard" ? (
         <div className="bg-cyber-dark border border-gray-800 rounded-2xl overflow-hidden shadow-2xl">
@@ -102,13 +102,14 @@ export default function Leaderboard() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-cyber-dark/80 border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
-                  <th className="py-4 px-4 font-normal text-center">Rank</th>
+                  <th className="py-4 px-4 font-normal text-center">Peringkat</th>
                   <th className="py-4 px-4 font-normal">Trader</th>
-                  <th className="py-4 px-4 font-normal">Rank Badge</th>
+                  <th className="py-4 px-4 font-normal">Gelar Badge</th>
                   <th className="py-4 px-4 font-normal text-center">Level</th>
-                  <th className="py-4 px-4 font-normal text-right">Virtual Cash (USD)</th>
+                  <th className="py-4 px-4 font-normal text-right">Saldo Virtual (USD)</th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-gray-800/60 text-sm">
                 {leaders.map((u) => (
                   <tr

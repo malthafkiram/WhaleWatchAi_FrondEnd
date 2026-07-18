@@ -122,7 +122,7 @@ export default function CoinDetail() {
         onClick={() => navigate("/")}
         className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm"
       >
-        <ArrowLeft className="w-4 h-4" /> BACK TO RADAR
+        <ArrowLeft className="w-4 h-4" /> KEMBALI KE RADAR PASAR
       </button>
 
       {/* SEGMENT 1: DETAIL RINGKAS ASET */}
@@ -146,7 +146,7 @@ export default function CoinDetail() {
               rel="noreferrer"
               className="text-xs text-gray-400 hover:text-white flex items-center gap-1 mt-1"
             >
-              <Globe className="w-3 h-3" /> Official Website
+              <Globe className="w-3 h-3" /> Situs Resmi Proyek
             </a>
           </div>
         </div>
@@ -156,12 +156,12 @@ export default function CoinDetail() {
               onClick={() => setShowShareModal(true)}
               className="px-4 py-2 bg-cyber-cyan/10 border border-cyber-cyan/40 text-cyber-cyan hover:bg-cyber-cyan/20 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
             >
-              <Share2 className="w-4 h-4" /> SHARE AI CARD
+              <Share2 className="w-4 h-4" /> BAGIKAN KARTU AI
             </button>
           )}
           <div className="text-left lg:text-right">
             <span className="text-xs text-gray-400 block">
-              CURRENT INDEX PRICE
+              HARGA INDEKS SAAT INI
             </span>
             <span className="text-2xl font-black text-white">
               ${coinData?.market_stats.current_price?.toLocaleString()}
@@ -169,6 +169,7 @@ export default function CoinDetail() {
           </div>
         </div>
       </div>
+
 
 
         {/* Share Modal */}
@@ -181,18 +182,18 @@ export default function CoinDetail() {
             >
               <div className="flex items-center justify-between border-b border-gray-800 pb-3">
                 <span className="text-white font-bold text-sm flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-cyber-neon" /> EXPORT AI INTELLIGENCE CARD
+                  <Sparkles className="w-4 h-4 text-cyber-neon" /> EKSPOR KARTU SINYAL AI
                 </span>
                 <button
                   onClick={() => setShowShareModal(false)}
-                  className="text-gray-400 hover:text-white"
+                  className="text-gray-400 hover:text-white cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               {/* Infographic Preview */}
-              <div className="bg-gradient-to-br from-cyber-dark to-cyber-bg border border-cyber-cyan/30 p-5 rounded-2xl space-y-4 shadow-xl font-mono">
+              <div className="bg-gradient-to-br from-cyber-dark to-cyber-bg border border-cyber-cyan/30 p-4 sm:p-5 rounded-2xl space-y-4 shadow-xl font-mono">
                 <div className="flex justify-between items-center border-b border-gray-800 pb-3">
                   <div className="flex items-center gap-2">
                     <img src={coinData?.image} className="w-8 h-8 rounded-full" alt="coin" />
@@ -208,12 +209,12 @@ export default function CoinDetail() {
 
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between text-gray-400">
-                    <span>Live Index Price:</span>
+                    <span>Harga Indeks Live:</span>
                     <span className="text-white font-bold">${coinData?.market_stats?.current_price?.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between text-gray-400">
-                    <span>Market Sentiment:</span>
-                    <span className="text-cyber-neon font-bold">{aiData?.ai_analysis?.sentiment || "Neutral"}</span>
+                    <span>Sentimen Pasar:</span>
+                    <span className="text-cyber-neon font-bold">{aiData?.ai_analysis?.sentiment || "Netral"}</span>
                   </div>
                 </div>
 
@@ -222,40 +223,37 @@ export default function CoinDetail() {
                 </div>
 
                 <div className="pt-2 border-t border-gray-800 flex justify-between items-center text-[10px] text-gray-500">
-                  <span>WHALEWATCH.AI NEURAL CORE</span>
-                  <span>VERIFIED SIGNAL</span>
+                  <span>WHALEWATCH AI NEURAL CORE</span>
+                  <span>TERVERIFIKASI</span>
                 </div>
               </div>
 
               <button
                 onClick={handleCopyCardText}
-                className="w-full py-3 bg-cyber-cyan text-cyber-dark font-black rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-cyan-300 transition-all"
+                className="w-full py-3 bg-cyber-cyan text-cyber-dark font-black rounded-xl text-xs flex items-center justify-center gap-2 hover:bg-cyan-300 transition-all cursor-pointer"
               >
                 {copied ? <Check className="w-4 h-4 text-emerald-950" /> : <Copy className="w-4 h-4" />}
-                {copied ? "COPIED TO CLIPBOARD!" : "COPY SIGNAL TEXT FOR SOCIALS"}
+                {copied ? "BERHASIL DISALIN KE CLIPBOARD!" : "SALIN TEKS SINYAL AI UNTUK SOSMED"}
               </button>
             </motion.div>
           </div>
         )}
 
-
-
       {/* SEGMENT 2: TWO-COLUMN LAYOUT GRAFIK VS AI */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Kolom Kiri: Visualisasi Grafik Recharts (Lebar 60%) */}
-        <div className="lg:col-span-2 bg-cyber-dark border border-gray-800 p-6 rounded-2xl space-y-4">
-          <h3 className="text-sm font-bold text-gray-400 tracking-wider flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-cyber-cyan" /> HISTORICAL TARGET GRID
-            (7 DAYS)
+        {/* Kolom Kiri: Visualisasi Grafik Recharts */}
+        <div className="lg:col-span-2 bg-cyber-dark border border-gray-800 p-4 sm:p-6 rounded-2xl space-y-4">
+          <h3 className="text-xs sm:text-sm font-bold text-gray-400 tracking-wider flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-cyber-cyan" /> GRAFIK HARGA HISTORIS (7 HARI)
           </h3>
-          <div className="w-full h-[320px] bg-cyber-bg/50 rounded-xl p-2 border border-gray-900">
+          <div className="w-full h-[260px] sm:h-[320px] bg-cyber-bg/50 rounded-xl p-2 border border-gray-900">
             <ResponsiveContainer width="100%" h="100%">
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1E293B" />
-                <XAxis dataKey="day" stroke="#64748B" fontSize={11} />
+                <XAxis dataKey="day" stroke="#64748B" fontSize={10} />
                 <YAxis
                   stroke="#64748B"
-                  fontSize={11}
+                  fontSize={10}
                   domain={["auto", "auto"]}
                 />
                 <Tooltip
@@ -270,20 +268,20 @@ export default function CoinDetail() {
                   dataKey="Price"
                   stroke="#06B6D4"
                   strokeWidth={3}
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 7 }}
+                  dot={{ r: 3 }}
+                  activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Kolom Kanan: Kotak Analisis AI (Lebar 40%) */}
-        <div className="bg-cyber-dark border border-gray-800 p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between">
-          <h3 className="text-sm font-bold text-gray-400 tracking-wider flex items-center gap-2 mb-4">
-            <ShieldAlert className="w-4 h-4 text-cyber-neon" /> AI SENTIMENT
-            RADAR
+        {/* Kolom Kanan: Kotak Analisis AI */}
+        <div className="bg-cyber-dark border border-gray-800 p-4 sm:p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between">
+          <h3 className="text-xs sm:text-sm font-bold text-gray-400 tracking-wider flex items-center gap-2 mb-4">
+            <ShieldAlert className="w-4 h-4 text-cyber-neon" /> RADAR SENTIMEN AI
           </h3>
+
 
           {/* JIKA AKSES AI TERKUNCI (BACKDROP BLUR TIRAI) */}
           {isLocked ? (
