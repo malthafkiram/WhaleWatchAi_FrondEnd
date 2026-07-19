@@ -67,26 +67,26 @@ export default function Leaderboard() {
         </div>
 
         {/* Tab Selector */}
-        <div className="flex p-1 bg-cyber-dark border border-gray-800 rounded-xl">
+        <div className="grid grid-cols-2 gap-2 w-full sm:w-auto p-1 bg-cyber-dark border border-gray-800 rounded-xl">
           <button
             onClick={() => setActiveTab("leaderboard")}
-            className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+            className={`px-2.5 sm:px-4 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 whitespace-nowrap ${
               activeTab === "leaderboard"
                 ? "bg-cyber-cyan text-cyber-dark shadow-[0_0_15px_rgba(6,182,212,0.4)]"
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            <Trophy className="w-4 h-4" /> TRADER TERATAS
+            <Trophy className="w-4 h-4 flex-shrink-0" /> TRADER TERATAS
           </button>
           <button
             onClick={() => setActiveTab("history")}
-            className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+            className={`px-2.5 sm:px-4 py-2 text-[11px] sm:text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 whitespace-nowrap ${
               activeTab === "history"
                 ? "bg-cyber-cyan text-cyber-dark shadow-[0_0_15px_rgba(6,182,212,0.4)]"
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            <History className="w-4 h-4" /> RIWAYAT TRADING SAYA
+            <History className="w-4 h-4 flex-shrink-0" /> RIWAYAT TRADING SAYA
           </button>
         </div>
       </div>
@@ -101,7 +101,7 @@ export default function Leaderboard() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-cyber-dark/80 border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
+                <tr className="bg-cyber-dark/80 border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider whitespace-nowrap">
                   <th className="py-4 px-4 font-normal text-center">Peringkat</th>
                   <th className="py-4 px-4 font-normal">Trader</th>
                   <th className="py-4 px-4 font-normal">Gelar Badge</th>
@@ -116,31 +116,32 @@ export default function Leaderboard() {
                     key={u.id}
                     className="hover:bg-cyber-cyan/5 transition-colors font-mono"
                   >
-                    <td className="py-4 px-4 text-center">
+                    <td className="py-4 px-4 text-center whitespace-nowrap">
                       <div className="flex justify-center items-center">
                         {getRankBadge(u.rank)}
                       </div>
                     </td>
-                    <td className="py-4 px-4 font-bold text-white flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center text-cyber-cyan font-bold text-xs">
+                    <td className="py-4 px-4 font-bold text-white flex items-center gap-2 whitespace-nowrap">
+                      <div className="w-8 h-8 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 flex items-center justify-center text-cyber-cyan font-bold text-xs flex-shrink-0">
                         {u.username[0].toUpperCase()}
                       </div>
                       <span>{u.username}</span>
                       {u.isPremium && (
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-cyber-neon/20 border border-cyber-neon text-cyber-neon font-bold">
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-cyber-neon/20 border border-cyber-neon text-cyber-neon font-bold flex-shrink-0">
                           PRO
                         </span>
                       )}
                     </td>
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-4 whitespace-nowrap">
                       <span
-                        className={`text-xs px-2.5 py-1 rounded-lg border font-bold ${getBadgeColor(
+                        className={`text-xs px-2.5 py-1 rounded-lg border font-bold inline-flex items-center gap-1.5 whitespace-nowrap ${getBadgeColor(
                           u.badge,
                         )}`}
                       >
                         {u.badge}
                       </span>
                     </td>
+
                     <td className="py-4 px-4 text-center">
                       <span className="px-2.5 py-1 bg-cyber-bg border border-gray-800 rounded-lg text-cyber-cyan font-bold text-xs">
                         LVL {u.level}

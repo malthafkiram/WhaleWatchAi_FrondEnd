@@ -38,8 +38,9 @@ export default function Navbar({ onToggleSidebar, onOpenWhaleRadar }) {
         </button>
       </div>
 
-      {/* BLOK PROFIL DAN LOGOUT  */}
-      <div className="flex items-center gap-4 md:gap-6 font-mono">
+      {/* BLOK PROFIL DAN LOGOUT (Hanya tampil di Desktop/Tablet besar, disembunyikan di Mobile Android) */}
+      <div className="hidden md:flex items-center gap-4 md:gap-6 font-mono">
+
         {/* Tampilan Sesi Akun Pengguna */}
         <div className="flex items-center gap-2 md:gap-3 border-r border-gray-800/80 pr-4 md:pr-6">
           <div className="text-right">

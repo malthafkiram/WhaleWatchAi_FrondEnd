@@ -1,7 +1,21 @@
-import { NavLink } from "react-router";
-import { LayoutDashboard, Coins, Zap, Bitcoin, X, Trophy, Info } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, NavLink } from "react-router";
+import { LayoutDashboard, Coins, Zap, Bitcoin, X, Trophy, Info, LogOut, User, Sparkles } from "lucide-react";
+import { setLogout } from "../store/authSlice.js";
 
 export default function Sidebar({ isOpen, onClose }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+
+  const isPremiumUser =
+    user && (user.isPremium === true || String(user.isPremium) === "true");
+
+  const handleLogoutClick = () => {
+    dispatch(setLogout());
+    navigate("/login");
+  };
+
   const menuItems = [
     { path: "/", name: "RADAR PASAR", icon: LayoutDashboard },
     { path: "/watchlist", name: "DAFTAR PANTAUAN SAYA", icon: Coins },
@@ -71,13 +85,55 @@ export default function Sidebar({ isOpen, onClose }) {
           </nav>
         </div>
 
-        {/* FOOTER INFORMASI PENGEMBANG */}
-        <div className="text-[10px] font-mono text-gray-500 border-t border-gray-800/40 pt-4 text-center tracking-widest leading-relaxed">
-          SISTEM INTELLIGENCE v1.0 <br />
-          Dikembangkan oleh <span className="text-cyber-cyan font-bold">malthafkiram</span>
+        {/* BLOK PROFIL DAN LOGOUT PADA SIDEBAR */}
+        <div className="space-y-3 pt-4 border-t border-gray-800/80 font-mono">
+          <div className="flex items-center justify-between bg-cyber-bg/60 p-3 rounded-xl border border-gray-800">
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <img
+                src={
+                  user?.avatar ||
+                  "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=80"
+                }
+                alt="avatar"
+                className="w-8 h-8 rounded-lg object-cover border border-gray-700 bg-cyber-bg flex-shrink-0"
+                onError={(e) => {
+                  e.target.src =
+                    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=80";
+                }}
+              />
+              <div className="truncate">
+                <span className="text-xs font-bold text-white block truncate">
+                  {user?.username || "PENGGUNA_ANONIM"}
+                </span>
+                {isPremiumUser ? (
+                  <span className="text-[9px] font-black text-cyber-neon flex items-center gap-0.5">
+                    <Sparkles className="w-2.5 h-2.5 fill-cyber-neon" /> PRO
+                  </span>
+                ) : (
+                  <span className="text-[9px] font-bold text-gray-500 flex items-center gap-0.5">
+                    <User className="w-2.5 h-2.5" /> GRATIS
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={handleLogoutClick}
+            className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-cyber-rose bg-cyber-rose/10 hover:bg-cyber-rose hover:text-white border border-cyber-rose/30 rounded-xl transition-all cursor-pointer"
+          >
+            <LogOut className="w-4 h-4" /> KELUAR AKUN
+          </button>
+
+          {/* FOOTER INFORMASI PENGEMBANG */}
+          <div className="text-[10px] text-gray-500 pt-2 text-center tracking-widest leading-relaxed">
+            SISTEM INTELLIGENCE v1.0 <br />
+            Dikembangkan oleh <span className="text-cyber-cyan font-bold">malthafkiram</span>
+          </div>
         </div>
       </aside>
     </>
   );
 }
+
 
