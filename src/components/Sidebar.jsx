@@ -1,6 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router";
-import { LayoutDashboard, Coins, Zap, Bitcoin, X, Trophy, Info, LogOut, User, Sparkles } from "lucide-react";
+import {
+  LayoutDashboard,
+  Coins,
+  Zap,
+  Bitcoin,
+  X,
+  Trophy,
+  Info,
+  LogOut,
+  User,
+  Sparkles,
+} from "lucide-react";
 import { setLogout } from "../store/authSlice.js";
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -18,8 +29,8 @@ export default function Sidebar({ isOpen, onClose }) {
 
   const menuItems = [
     { path: "/", name: "RADAR PASAR", icon: LayoutDashboard },
-    { path: "/watchlist", name: "DAFTAR PANTAUAN SAYA", icon: Coins },
-    { path: "/leaderboard", name: "PAPAN PERINGKAT PAUS", icon: Trophy },
+    { path: "/watchlist", name: "DAFTAR PANTAUAN", icon: Coins },
+    { path: "/leaderboard", name: "PAPAN PERINGKAT", icon: Trophy },
     { path: "/upgrade", name: "UPGRADE KE PRO", icon: Zap },
     { path: "/info", name: "INFORMASI & PANDUAN", icon: Info },
   ];
@@ -128,12 +139,11 @@ export default function Sidebar({ isOpen, onClose }) {
           {/* FOOTER INFORMASI PENGEMBANG */}
           <div className="text-[10px] text-gray-500 pt-2 text-center tracking-widest leading-relaxed">
             SISTEM INTELLIGENCE v1.0 <br />
-            Dikembangkan oleh <span className="text-cyber-cyan font-bold">malthafkiram</span>
+            Dikembangkan oleh{" "}
+            <span className="text-cyber-cyan font-bold">malthafkiram</span>
           </div>
         </div>
       </aside>
     </>
   );
 }
-
-

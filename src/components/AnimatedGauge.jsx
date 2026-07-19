@@ -56,13 +56,14 @@ export default function AnimatedGauge({
         {/* SEKTOR KIRI: Kontrol Taruhan & Indikator Progress XP */}
         <div className="flex flex-col gap-3 flex-1 w-full">
           {/* Pangkat Level Pengguna */}
-          <div className="flex items-center gap-2 bg-gray-900/40 border border-gray-800/80 px-3 py-1.5 rounded-xl w-fit">
-            <Award className="w-4 h-4 text-amber-500" />
-            <span className="text-[11px] font-bold tracking-wider text-gray-300">
+          <div className="flex items-center gap-2 bg-gray-900/40 border border-gray-800/80 px-3 py-1.5 rounded-xl w-fit whitespace-nowrap inline-flex">
+            <Award className="w-4 h-4 text-amber-500 flex-shrink-0" />
+            <span className="text-[11px] font-bold tracking-wider text-gray-300 whitespace-nowrap">
               RANK TRADER:{" "}
-              <span className="text-white font-black text-xs">LVL {level}</span>
+              <span className="text-white font-black text-xs whitespace-nowrap">LVL {level}</span>
             </span>
           </div>
+
 
           {/* Progress Bar Pengukur Level-Up */}
           <div className="space-y-1">

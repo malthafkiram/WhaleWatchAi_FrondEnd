@@ -45,7 +45,8 @@ export default function WhaleCopilot() {
       });
 
       const rawReply = res.data?.data?.reply || "Maaf, kendala jaringan.";
-      const cleanReply = typeof rawReply === "string" ? rawReply.replace(/\*/g, "") : rawReply;
+      const cleanReply =
+        typeof rawReply === "string" ? rawReply.replace(/\*/g, "") : rawReply;
 
       setMessages((prev) => [
         ...prev,
@@ -60,7 +61,8 @@ export default function WhaleCopilot() {
             ? "Sesi masuk telah berakhir. Silakan login kembali."
             : err.message || "Gagal menghubungkan ke AI Copilot.");
 
-      const cleanError = typeof errorMsg === "string" ? errorMsg.replace(/\*/g, "") : errorMsg;
+      const cleanError =
+        typeof errorMsg === "string" ? errorMsg.replace(/\*/g, "") : errorMsg;
 
       setMessages((prev) => [
         ...prev,
@@ -209,11 +211,10 @@ export default function WhaleCopilot() {
           className="px-4 py-3 bg-gradient-to-r from-cyber-cyan to-cyber-neon text-cyber-dark font-black rounded-2xl shadow-[0_0_25px_rgba(6,182,212,0.5)] flex items-center gap-2 tracking-wider text-xs border border-white/20 cursor-pointer"
         >
           <Bot className="w-5 h-5 text-cyber-dark" />
-          <span>TANYA WHALE COPILOT</span>
+          <span>CHAT</span>
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
         </motion.button>
       )}
     </div>
   );
 }
-

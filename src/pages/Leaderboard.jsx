@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { Trophy, Crown, Medal, Award, Flame, History, ArrowUpRight, ArrowDownRight, RefreshCw } from "lucide-react";
+import {
+  Trophy,
+  Crown,
+  Medal,
+  Award,
+  Flame,
+  History,
+  ArrowUpRight,
+  ArrowDownRight,
+  RefreshCw,
+} from "lucide-react";
 import { motion } from "motion/react";
 import api from "../utils/api";
 
@@ -30,17 +40,22 @@ export default function Leaderboard() {
   }, []);
 
   const getRankBadge = (rank) => {
-    if (rank === 1) return <Crown className="w-5 h-5 text-amber-400 animate-bounce" />;
+    if (rank === 1)
+      return <Crown className="w-5 h-5 text-amber-400 animate-bounce" />;
     if (rank === 2) return <Medal className="w-5 h-5 text-gray-300" />;
     if (rank === 3) return <Medal className="w-5 h-5 text-amber-600" />;
     return <span className="text-gray-500 font-bold text-xs">#{rank}</span>;
   };
 
   const getBadgeColor = (badge) => {
-    if (badge === "Apex Titan") return "bg-amber-400/10 border-amber-400 text-amber-400";
-    if (badge === "Whale Lord") return "bg-cyber-neon/10 border-cyber-neon text-cyber-neon";
-    if (badge === "Market Shark") return "bg-cyber-cyan/10 border-cyber-cyan text-cyber-cyan";
-    if (badge === "Cyber Dolphin") return "bg-cyber-emerald/10 border-cyber-emerald text-cyber-emerald";
+    if (badge === "Apex Titan")
+      return "bg-amber-400/10 border-amber-400 text-amber-400";
+    if (badge === "Whale Lord")
+      return "bg-cyber-neon/10 border-cyber-neon text-cyber-neon";
+    if (badge === "Market Shark")
+      return "bg-cyber-cyan/10 border-cyber-cyan text-cyber-cyan";
+    if (badge === "Cyber Dolphin")
+      return "bg-cyber-emerald/10 border-cyber-emerald text-cyber-emerald";
     return "bg-gray-800 border-gray-700 text-gray-400";
   };
 
@@ -58,7 +73,7 @@ export default function Leaderboard() {
           </div>
           <div>
             <h1 className="text-2xl font-black text-white tracking-wide">
-              PAPAN PERINGKAT PAUS (LEADERBOARD)
+              PAPAN PERINGKAT (LEADERBOARD)
             </h1>
             <p className="text-gray-400 text-sm mt-0.5">
               Papan peringkat trader virtual terbaik & log performa trading
@@ -86,7 +101,7 @@ export default function Leaderboard() {
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            <History className="w-4 h-4 flex-shrink-0" /> RIWAYAT TRADING SAYA
+            <History className="w-4 h-4 flex-shrink-0" /> RIWAYAT TRADING
           </button>
         </div>
       </div>
@@ -102,11 +117,15 @@ export default function Leaderboard() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-cyber-dark/80 border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider whitespace-nowrap">
-                  <th className="py-4 px-4 font-normal text-center">Peringkat</th>
+                  <th className="py-4 px-4 font-normal text-center">
+                    Peringkat
+                  </th>
                   <th className="py-4 px-4 font-normal">Trader</th>
                   <th className="py-4 px-4 font-normal">Gelar Badge</th>
                   <th className="py-4 px-4 font-normal text-center">Level</th>
-                  <th className="py-4 px-4 font-normal text-right">Saldo Virtual (USD)</th>
+                  <th className="py-4 px-4 font-normal text-right">
+                    Saldo Virtual (USD)
+                  </th>
                 </tr>
               </thead>
 
@@ -142,11 +161,12 @@ export default function Leaderboard() {
                       </span>
                     </td>
 
-                    <td className="py-4 px-4 text-center">
-                      <span className="px-2.5 py-1 bg-cyber-bg border border-gray-800 rounded-lg text-cyber-cyan font-bold text-xs">
+                    <td className="py-4 px-4 text-center whitespace-nowrap">
+                      <span className="px-2.5 py-1 bg-cyber-bg border border-gray-800 rounded-lg text-cyber-cyan font-bold text-xs inline-flex items-center justify-center whitespace-nowrap">
                         LVL {u.level}
                       </span>
                     </td>
+
                     <td className="py-4 px-4 text-right font-black text-white text-base">
                       ${u.virtualCash?.toLocaleString()}
                     </td>
@@ -160,11 +180,13 @@ export default function Leaderboard() {
         /* History Tab */
         <div className="bg-cyber-dark border border-gray-800 rounded-2xl overflow-hidden p-6 space-y-4">
           <h3 className="text-sm font-bold text-gray-400 tracking-wider flex items-center gap-2">
-            <History className="w-4 h-4 text-cyber-cyan" /> RECENT PREDICTION POSITIONS
+            <History className="w-4 h-4 text-cyber-cyan" /> RECENT PREDICTION
+            POSITIONS
           </h3>
           {history.length === 0 ? (
             <div className="p-12 text-center text-gray-500 text-xs border border-dashed border-gray-800 rounded-xl">
-              Belum ada riwayat trading game yang tercatat. Buka posisi pertamamu di Dasbor!
+              Belum ada riwayat trading game yang tercatat. Buka posisi
+              pertamamu di Dasbor!
             </div>
           ) : (
             <div className="space-y-3">
@@ -211,7 +233,11 @@ export default function Leaderboard() {
                               : "bg-cyber-rose/10 border-cyber-rose text-cyber-rose"
                         }`}
                       >
-                        {isWin ? "PROFIT +$500" : isPending ? "WAITING SETTLEMENT" : "LOSS -$300"}
+                        {isWin
+                          ? "PROFIT +$500"
+                          : isPending
+                            ? "WAITING SETTLEMENT"
+                            : "LOSS -$300"}
                       </span>
                       <span className="text-gray-500 text-[11px]">
                         {new Date(h.createdAt).toLocaleDateString()}
