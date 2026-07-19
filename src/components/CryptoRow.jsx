@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
-import { Plus, TrendingUp, TrendingDown } from "lucide-react"; // Ikon penanda arah tren pasar
+import { Plus, TrendingUp, TrendingDown } from "lucide-react";
+import { formatCryptoPrice } from "../utils/formatters.js";
 
 export default function CryptoRow({
   coin,
@@ -11,14 +12,6 @@ export default function CryptoRow({
   const navigate = useNavigate();
   const isPositive = coin.price_change_percentage_24h >= 0;
 
-  // Alasan logis menggunakan toLocaleString: Memformat angka desimal finansial agar rapi sesuai standar global
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(price);
-  };
-
   return (
     <motion.tr
       initial={{ opacity: 0, x: -10 }}
@@ -27,7 +20,6 @@ export default function CryptoRow({
       onClick={onRowClick}
       className="border-b border-gray-800/60 hover:bg-cyber-dark/60 transition-colors cursor-pointer group"
     >
-      {/* Klik pada area baris selain tombol "+" akan memicu navigasi detail koin */}
       <td
         className="py-4 px-4 font-mono text-gray-500 text-sm hidden sm:table-cell"
         onClick={() => navigate(`/coin/${coin.id}`)}
@@ -55,11 +47,12 @@ export default function CryptoRow({
       </td>
 
       <td
-        className="py-4 px-4 font-mono font-bold text-white"
+        className="py-4 px-4 font-mono font-bold text-white whitespace-nowrap"
         onClick={() => navigate(`/coin/${coin.id}`)}
       >
-        {formatPrice(coin.current_price)}
+        {formatCryptoPrice(coin.current_price)}
       </td>
+
 
       <td
         className="py-4 px-4 font-mono font-bold"

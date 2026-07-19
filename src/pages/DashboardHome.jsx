@@ -11,6 +11,7 @@ import {
 import { addToWatchlist } from "../store/watchlistSlice.js";
 import CryptoRow from "../components/CryptoRow.jsx";
 import api from "../utils/api.js";
+import { formatCryptoPrice } from "../utils/formatters.js";
 
 import AnimatedGauge from "../components/AnimatedGauge.jsx";
 import LiveTerminalFeed from "../components/LiveTerminalFeed.jsx";
@@ -219,8 +220,9 @@ export default function DashboardHome() {
             <span key={c.id} className="inline-flex items-center gap-2">
               <span className="text-white font-bold"> {c.symbol} </span>
               <span className="text-gray-400">
-                ${c.current_price?.toLocaleString()}
+                {formatCryptoPrice(c.current_price)}
               </span>
+
               <span
                 className={
                   c.price_change_percentage_24h >= 0

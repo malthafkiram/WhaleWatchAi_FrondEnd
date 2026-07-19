@@ -1,5 +1,6 @@
 import { BarChart3, Target } from "lucide-react";
 import { motion } from "motion/react";
+import { formatCryptoPrice } from "../utils/formatters.js";
 
 export default function LiveVolumeMonitor({
   coins = [],
@@ -55,8 +56,9 @@ export default function LiveVolumeMonitor({
                   <span
                     className={isSelected ? "text-cyber-cyan" : "text-gray-400"}
                   >
-                    ${coin.current_price?.toLocaleString()}
+                    {formatCryptoPrice(coin.current_price)}
                   </span>
+
                   <span
                     className={`block text-[9px] ${coin.price_change_percentage_24h >= 0 ? "text-cyber-emerald" : "text-cyber-rose"}`}
                   >

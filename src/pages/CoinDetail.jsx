@@ -14,6 +14,8 @@ import {
 import { Cpu, Globe, ShieldAlert, ArrowLeft, Lock, Share2, Copy, Check, Sparkles, X } from "lucide-react";
 import SentimentBar from "../components/SentimentBar.jsx";
 import api from "../utils/api.js";
+import { formatCryptoPrice } from "../utils/formatters.js";
+
 
 export default function CoinDetail() {
   const { coinId } = useParams();
@@ -164,7 +166,7 @@ export default function CoinDetail() {
               HARGA INDEKS SAAT INI
             </span>
             <span className="text-2xl font-black text-white">
-              ${coinData?.market_stats.current_price?.toLocaleString()}
+              {formatCryptoPrice(coinData?.market_stats?.current_price)}
             </span>
           </div>
         </div>
@@ -210,8 +212,9 @@ export default function CoinDetail() {
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between text-gray-400">
                     <span>Harga Indeks Live:</span>
-                    <span className="text-white font-bold">${coinData?.market_stats?.current_price?.toLocaleString()}</span>
+                    <span className="text-white font-bold">{formatCryptoPrice(coinData?.market_stats?.current_price)}</span>
                   </div>
+
                   <div className="flex justify-between text-gray-400">
                     <span>Sentimen Pasar:</span>
                     <span className="text-cyber-neon font-bold">{aiData?.ai_analysis?.sentiment || "Netral"}</span>
