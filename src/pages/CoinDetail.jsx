@@ -46,14 +46,16 @@ import api from "../utils/api.js";
 import { formatCryptoPrice } from "../utils/formatters.js";
 
 /**
- * Helper Metadata Kamus Fundamental Proyek Kripto
- * Mengembalikan Profil Perusahaan, Lokasi Markas, Token Utility, Konsensus, Visi Misi & Roadmap
+ * Helper Metadata Kamus Fundamental Proyek Kripto 100% Bahasa Indonesia
+ * Mengembalikan Profil Perusahaan, Lokasi Markas, Token Utility, Konsensus, Visi Misi & Roadmap & Narasi Deskripsi
  */
 const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
   const id = coinId?.toLowerCase() || "";
 
   const metadata = {
     bitcoin: {
+      indonesianDescription:
+        "Bitcoin (BTC) adalah mata uang kripto terdesentralisasi pertama di dunia yang diciptakan pada tahun 2009 oleh pencipta anonim berorientasi samaran Satoshi Nakamoto. Bitcoin beroperasi pada jaringan peer-to-peer terdesentralisasi tanpa perantara atau bank sentral. Menggunakan mekanisme konsensus Proof-of-Work (PoW) berbasis algoritma SHA-256, Bitcoin dirancang dengan jumlah pasokan terbatas sebanyak 21 juta koin yang menjadikannya sebagai penyimpan nilai digital (Emas Digital) paling aman di dunia.",
       developerOrg: "Satoshi Nakamoto & Komunitas Pengembang Global",
       headquartersLocation: "Jaringan Terdesentralisasi Global (Tanpa Kantor Pusat)",
       tokenUtility: "Store of Value Digital (Emas Digital) & Sistem Pembayaran P2P Bebas Inflasi",
@@ -62,6 +64,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Skalabilitas Layer-2 Lightning Network, integrasi Taproot Assets, dan adopsi cadangan devisa negara/institusi global.",
     },
     ethereum: {
+      indonesianDescription:
+        "Ethereum (ETH) adalah platform blockchain terdesentralisasi open-source yang menggabungkan fungsionalitas smart contract. Didesain oleh Vitalik Buterin pada tahun 2015, Ethereum memungkinkan para pengembang di seluruh dunia untuk membangun dan menjalankan aplikasi terdesentralisasi (dApps), protokol Finansial Terdesentralisasi (DeFi), NFT, dan organisasi otonom (DAO) tanpa risiko kecurangan, downtime, atau campur tangan pihak ketiga.",
       developerOrg: "Ethereum Foundation (Vitalik Buterin & Tim Pengembang Core)",
       headquartersLocation: "Zug, Swiss (Ethereum Foundation HQ)",
       tokenUtility: "Biaya Gas Eksekusi Smart Contract, Staking Validator Consensus, & Agregasi Liquidity DeFi",
@@ -70,6 +74,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Transisi penuh Roadmap Danksharding & PeerDAS untuk menurunkan biaya L2 rollup mendekati nol, serta verifikasi Verkle Trees.",
     },
     solana: {
+      indonesianDescription:
+        "Solana (SOL) adalah platform blockchain layer-1 performa tinggi yang dirancang untuk mendukung adopsi massal Web3 dan aplikasi terdesentralisasi berskala besar. Diciptakan oleh Anatoly Yakovenko pada tahun 2020, Solana menggabungkan konsensus Proof-of-History (PoH) dengan Proof-of-Stake (PoS) untuk menghasilkan throughput transaksi lebih dari 50.000 TPS dengan biaya gas transaksi mendekati nol dolar.",
       developerOrg: "Solana Labs Inc. & Solana Foundation (Anatoly Yakovenko)",
       headquartersLocation: "San Francisco, California, Amerika Serikat",
       tokenUtility: "Gas Fee Transaksi Kecepatan Tinggi, Staking Node Validator, & Pembayaran DApp",
@@ -78,6 +84,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Peluncuran validator client Firedancer oleh Jump Crypto untuk mencapai 1 Juta TPS dan ketahanan jaringan kelas institusional.",
     },
     ripple: {
+      indonesianDescription:
+        "XRP adalah aset digital terdesentralisasi yang dirancang khusus untuk meningkatkan efisiensi sistem pembayaran dan transfer uang internasional lintas negara. Dikelola oleh Ripple Labs, XRP Ledger memungkinkan penyelesaian transaksi antar bank dan lembaga keuangan global hanya dalam 3-5 detik dengan biaya transaksi yang sangat murah.",
       developerOrg: "Ripple Labs Inc. (Brad Garlinghouse & Chris Larsen)",
       headquartersLocation: "San Francisco, California, Amerika Serikat",
       tokenUtility: "Jembatan Likuiditas Pembayaran Lintas Negara (Cross-Border Remittance) Lembaga Perbankan",
@@ -86,6 +94,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Integrasi Tokenisasi Aset Dunia Nyata (RWA), peluncuran Stablecoin RLUSD, dan ekspansi lisensi perbankan global.",
     },
     arbitrum: {
+      indonesianDescription:
+        "Arbitrum (ARB) adalah solusi skalabilitas Layer-2 untuk Ethereum yang menggunakan teknologi Optimistic Rollup. Dikembangkan oleh Offchain Labs, Arbitrum memungkinkan eksekusi transaksi yang jauh lebih cepat dan hemat biaya dengan tetap mewarisi tingkat keamanan penuh dari jaringan utama Ethereum.",
       developerOrg: "Offchain Labs Inc. & Arbitrum DAO",
       headquartersLocation: "New York, NY, Amerika Serikat",
       tokenUtility: "Governance Voting Arbitrum DAO, Gas Fee Orbit Chains, & Insentif Ekosistem L2",
@@ -94,6 +104,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Peluncuran Stylus (Dukungan C/C++/Rust di EVM), desentralisasi penuh Sequencer, dan ekspansi Orbit Layer-3 chains.",
     },
     "polygon-ecosystem-token": {
+      indonesianDescription:
+        "Polygon (POL) adalah ekosistem infrastruktur terdesentralisasi yang menghubungkan jaringan blockchain berbasis ZK-Rollup melalui arsitektur AggLayer. Polygon memberikan skalabilitas tanpa batas bagi aplikasi Web3 dan pengembang smart contract.",
       developerOrg: "Polygon Labs (Sandeep Nailwal & Jaynti Kanani)",
       headquartersLocation: "Singapura / Global",
       tokenUtility: "Staking Validator Hub 2.0, Gas Fee Polygon zkEVM & AggLayer Interoperability",
@@ -102,6 +114,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Migrasi penuh POL tokenomics, integrasi AggLayer lintas rantai, dan prover ZK generasi berikutnya.",
     },
     dogecoin: {
+      indonesianDescription:
+        "Dogecoin (DOGE) adalah mata uang kripto open-source berbasis meme komedi pertama di dunia yang dibuat pada tahun 2013 oleh Billy Markus dan Jackson Palmer. Memiliki komunitas global terbesar, Dogecoin banyak digunakan untuk pembayaran mikro dan tipping media sosial.",
       developerOrg: "Dogecoin Foundation (Billy Markus, Jackson Palmer & Komunitas Global)",
       headquartersLocation: "Komunitas Terdesentralisasi Global",
       tokenUtility: "Mata Uang Mikro Tipping Media Sosial, Pembayaran E-commerce, & Transfer Antar Dompet",
@@ -110,6 +124,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Pengembangan LibDogecoin SDK untuk kemudahan integrasi merchant dan optimasi transaksi mikro.",
     },
     pepe: {
+      indonesianDescription:
+        "Pepe (PEPE) adalah token meme terdesentralisasi yang dibangun di atas blockchain Ethereum sebagai bentuk penghormatan pada budaya meme internet Pepe the Frog. Pepe beroperasi tanpa pajak transaksi dan sepenuhnya digerakkan oleh kekuatan komunitas Web3.",
       developerOrg: "Komunitas Pepe Protocol & Kontributor Komunitas Web3",
       headquartersLocation: "Komunitas Terdesentralisasi Global",
       tokenUtility: "Token Budaya Meme, Perdagangan Komunitas, & Insentif Likuiditas DEX",
@@ -118,6 +134,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Ekspansi kemitraan ekosistem Web3, inisiatif bot DeFi komunitas, dan pembaruan struktur likuiditas.",
     },
     bittensor: {
+      indonesianDescription:
+        "Bittensor (TAO) adalah protokol open-source yang memperkuat jaringan pembelajaran mesin (Machine Learning) terdesentralisasi. Bittensor memungkinkan pengembang AI membagikan model komputasi neural secara global dan menerima imbalan token TAO.",
       developerOrg: "Opentensor Foundation (Jacob Steeves & Ala Shaabana)",
       headquartersLocation: "Toronto, Kanada / Global",
       tokenUtility: "Insentif Model Kecerdasan Buatan (AI), Akses Subnet GPU Compute, & Staking Neural Node",
@@ -126,6 +144,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Peluncuran Subnet dApps AI baru (text, image, audio generation) dan integrasi agen AI terdesentralisasi.",
     },
     "render-token": {
+      indonesianDescription:
+        "Render Network (RENDER) adalah penyedia solusi rendering GPU terdesentralisasi yang menghubungkan seniman digital dan pembuat animasi 3D/VFX dengan penyedia daya komputasi GPU menganggur di seluruh dunia.",
       developerOrg: "Render Network Foundation & OTOY Inc. (Jules Urbach)",
       headquartersLocation: "Los Angeles, California, AS",
       tokenUtility: "Pembayaran Rendering 3D/VFX, Penyewaan GPU Compute, & Insentif Node Provider",
@@ -134,6 +154,8 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
       futureRoadmap: "Integrasi rendering AI Generatif tingkat tinggi dan ekspansi infrastruktur node komputasi enterprise.",
     },
     "fetch-ai": {
+      indonesianDescription:
+        "Fetch.ai (FET) adalah jaringan kecerdasan buatan terdesentralisasi yang memanfaatkan Autonomous Economic Agents (AEA) untuk mengotomatisasi transaksi bisnis, manajemen pasokan, dan layanan ekonomi tanpa campur tangan manusia.",
       developerOrg: "Artificial Superintelligence (ASI) Alliance (Humayun Sheikh)",
       headquartersLocation: "Cambridge, Inggris (UK)",
       tokenUtility: "Deploy & Eksekusi Autonomous Economic Agents (AEA), Staking Node AI",
@@ -149,6 +171,7 @@ const getCoinFundamentalInfo = (coinId, coinName, symbol, categories = []) => {
 
   const categoryStr = categories.join(", ") || "Kripto Terdesentralisasi";
   return {
+    indonesianDescription: `${coinName} (${symbol}) adalah aset kripto terdesentralisasi yang dikembangkan untuk memfasilitasi transaksi digital aman dan terpercaya pada ekosistem ${categoryStr}.`,
     developerOrg: `${coinName} Core Foundation & Open-Source Community`,
     headquartersLocation: "Jaringan Terdesentralisasi Global",
     tokenUtility: `Utility Token Ekosistem ${coinName} untuk Transaksi, Staking, dan Insentif Protokol`,
@@ -170,7 +193,7 @@ export default function CoinDetail() {
   const [chartData, setChartData] = useState([]);
   const [chartDays, setChartDays] = useState("7"); // '0.5' | '1' | '2' | '3' | '7'
   const [chartLoading, setChartLoading] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(1); // 1 = normal, 2 = 50% data, 4 = 25% data
+  const [zoomLevel, setZoomLevel] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -206,7 +229,7 @@ export default function CoinDetail() {
           setChartData(chartRes.data.data);
         } else {
           const sampleChart = Array.from({ length: 7 }, (_, i) => ({
-            day: `Day ${i + 1}`,
+            day: `Hari ${i + 1}`,
             Price:
               (detailRes.data.data.market_stats?.current_price || 100) *
               (1 + (Math.random() * 0.04 - 0.02)),
@@ -230,12 +253,11 @@ export default function CoinDetail() {
     fetchAllDetails();
   }, [coinId, isLocked]);
 
-  // Fungsi pengambil grafik dinamis sesuai rentang waktu yang dipilih (12 jam, 1 hari, 2 hari, 3 hari, 7 hari)
   const handleTimeframeChange = async (days) => {
     try {
       setChartDays(days);
       setChartLoading(true);
-      setZoomLevel(1); // Reset zoom level
+      setZoomLevel(1);
       const chartRes = await api.get(`/api/coins/chart/${coinId}?days=${days}`);
       if (chartRes.data?.data && chartRes.data.data.length > 0) {
         setChartData(chartRes.data.data);
@@ -278,19 +300,11 @@ export default function CoinDetail() {
   }
 
   const getActionColor = (action) => {
-    if (action === "BUY")
+    if (action === "BUY" || action === "BELI")
       return "text-cyber-emerald border-cyber-emerald bg-cyber-emerald/10";
-    if (action === "SELL")
+    if (action === "SELL" || action === "JUAL")
       return "text-cyber-rose border-cyber-rose bg-cyber-rose/10";
     return "text-cyber-amber border-cyber-amber bg-cyber-amber/10";
-  };
-
-  const cleanDescription = (html) => {
-    if (!html) return "Deskripsi rinci proyek belum tersedia.";
-    const tmp = document.createElement("DIV");
-    tmp.innerHTML = html;
-    const text = tmp.textContent || tmp.innerText || "";
-    return text.length > 600 ? text.substring(0, 600) + "..." : text;
   };
 
   const fundamentalMeta = getCoinFundamentalInfo(
@@ -304,7 +318,6 @@ export default function CoinDetail() {
   const maxSupply = coinData?.supply?.max_supply || coinData?.supply?.total_supply;
   const supplyRatio = circulating && maxSupply ? Math.min((circulating / maxSupply) * 100, 100) : null;
 
-  // Saring data grafik berdasarkan Zoom Level
   const getZoomedChartData = () => {
     if (!chartData || chartData.length === 0) return [];
     if (zoomLevel === 1) return chartData;
@@ -357,7 +370,7 @@ export default function CoinDetail() {
               )}
               {coinData?.genesis_date && (
                 <span className="px-2 py-0.5 bg-cyber-bg border border-gray-800 rounded text-gray-400 flex items-center gap-1">
-                  <Calendar className="w-3 h-3 text-cyber-cyan" /> Launch: {coinData.genesis_date}
+                  <Calendar className="w-3 h-3 text-cyber-cyan" /> Rilis: {coinData.genesis_date}
                 </span>
               )}
             </div>
@@ -516,7 +529,7 @@ export default function CoinDetail() {
                 <button
                   onClick={() => setZoomLevel((prev) => Math.min(prev * 1.5, 4))}
                   className="px-2 py-1 bg-cyber-bg border border-gray-800 hover:border-cyber-cyan text-cyber-cyan rounded-lg transition-all flex items-center gap-1 font-bold text-[11px] cursor-pointer"
-                  title="Zoom In (Fokus 50% data terakhir)"
+                  title="Zoom In"
                 >
                   <ZoomIn className="w-3.5 h-3.5" /> <span className="hidden sm:inline">+</span>
                 </button>
@@ -589,7 +602,6 @@ export default function CoinDetail() {
                     dot={{ r: 2 }}
                     activeDot={{ r: 6 }}
                   />
-                  {/* Komponen Brush untuk Slider Drag & Zoom Interaktif */}
                   <Brush
                     dataKey="day"
                     height={24}
@@ -605,26 +617,27 @@ export default function CoinDetail() {
             </p>
           </div>
 
-          {/* Kolom Kanan: Kotak Radar AI & Sentimen */}
-          <div className="bg-cyber-dark border border-gray-800 p-4 sm:p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-xl">
+          {/* Kolom Kanan: Kotak Radar AI & Sentimen (Sangat Responsif di Android/Tablet) */}
+          <div className="bg-cyber-dark border border-gray-800 p-4 sm:p-6 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-xl min-h-[380px] sm:min-h-[420px]">
             <h3 className="text-xs sm:text-sm font-bold text-gray-300 tracking-wider flex items-center gap-2 mb-4 border-b border-gray-800/80 pb-3">
               <ShieldAlert className="w-4 h-4 text-cyber-neon" /> RADAR SENTIMEN AI
             </h3>
 
+            {/* JIKA AKSES AI TERKUNCI (OVERLAY LAYAR MULTI-DEVICE 100% RESPONSIVE) */}
             {isLocked && (
-              <div className="absolute inset-0 bg-cyber-dark/90 backdrop-blur-md z-20 flex flex-col items-center justify-center p-6 text-center space-y-4">
-                <div className="p-4 bg-cyber-neon/10 rounded-2xl border border-cyber-neon text-cyber-neon">
-                  <Lock className="w-8 h-8" />
+              <div className="absolute inset-0 bg-cyber-dark/95 backdrop-blur-md z-20 flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
+                <div className="p-3 sm:p-4 bg-cyber-neon/10 rounded-2xl border border-cyber-neon text-cyber-neon shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                  <Lock className="w-6 h-6 sm:w-8 sm:h-8 animate-pulse" />
                 </div>
-                <h4 className="text-white font-black text-base sm:text-lg">
+                <h4 className="text-white font-black text-sm sm:text-lg tracking-wide">
                   ANALISIS AI TERKUNCI
                 </h4>
-                <p className="text-gray-400 text-xs leading-relaxed max-w-xs">
+                <p className="text-gray-400 text-[11px] sm:text-xs leading-relaxed max-w-xs">
                   Fitur evaluasi psikologis pasar bertenaga AI untuk koin selain Bitcoin & Ethereum khusus bagi anggota kelas Whale Pro.
                 </p>
                 <button
                   onClick={() => navigate("/upgrade")}
-                  className="px-6 py-2.5 bg-cyber-neon text-white font-bold text-xs rounded-xl tracking-widest shadow-[0_0_20px_rgba(139,92,246,0.4)] cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-cyber-neon text-white font-black text-xs rounded-xl tracking-widest shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:bg-purple-600 transition-all cursor-pointer"
                 >
                   UPGRADE KE PRO
                 </button>
@@ -720,7 +733,7 @@ export default function CoinDetail() {
               <Compass className="w-4 h-4 text-cyber-cyan" /> CETAK BIRU & NARASI PROYEK
             </h3>
             <p className="text-xs sm:text-sm text-gray-300 leading-relaxed font-mono">
-              {cleanDescription(coinData?.description)}
+              {fundamentalMeta.indonesianDescription}
             </p>
           </div>
 
